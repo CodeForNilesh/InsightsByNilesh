@@ -1,0 +1,388 @@
+1] <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JWT Explained Simply</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --border: #e5e7eb;
+      --success: #047857;
+      --warning: #b45309;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--accent), #1d4ed8);
+      color: white;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      line-height: 1.3;
+    }
+
+    h1 { font-size: 2rem; margin-bottom: 10px; }
+    h2 { font-size: 1.35rem; margin-bottom: 12px; color: #111827; }
+
+    .intro {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 18px 0 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .steps, .list, .notes {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    ol, ul {
+      padding-left: 22px;
+      margin: 0;
+    }
+
+    li { margin-bottom: 8px; }
+
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 14px 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--accent-soft);
+      color: #1e3a8a;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .badge-blue { background: var(--accent-soft); color: var(--accent); }
+    .badge-green { background: #dcfce7; color: var(--success); }
+    .badge-amber { background: #fef3c7; color: var(--warning); }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      color: var(--muted);
+      margin: 12px 0;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      header { padding: 24px; }
+      .container { padding: 20px 12px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>JWT Explained Simply</h1>
+      <p>A JWT is a compact, signed digital identity token used to prove who you are when communicating with a server.</p>
+    </header>
+
+    <section class="intro">
+      <p><strong>JWT (JSON Web Token)</strong> is like a digital identity card. It helps a client prove its identity to a server without the server needing to store session data for every user.</p>
+      <p>It is compact, signed, and commonly used in modern APIs and authentication systems.</p>
+    </section>
+
+    <section class="steps">
+      <h2>🔑 JWT Basics</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3>Header</h3>
+          <p>Contains metadata such as the token type and signing algorithm.</p>
+        </article>
+        <article class="card">
+          <h3>Payload</h3>
+          <p>Contains claims such as user information, role, and expiration time.</p>
+        </article>
+        <article class="card">
+          <h3>Signature</h3>
+          <p>Ensures the token has not been tampered with.</p>
+        </article>
+      </div>
+      <p><strong>Example format:</strong></p>
+      <pre><code>xxxxx.yyyyy.zzzzz</code></pre>
+    </section>
+
+    <section class="steps">
+      <h2>🛠 JWT Flow</h2>
+      <ol>
+        <li><strong>Login request:</strong> The user sends credentials to the server.</li>
+        <li><strong>Token creation:</strong> The server verifies the credentials and creates a JWT.</li>
+        <li><strong>Token storage:</strong> The client stores it in a browser storage place or cookie.</li>
+        <li><strong>API request:</strong> The client sends the token in the Authorization header.</li>
+        <li><strong>Token verification:</strong> The server checks the signature and claims before granting access.</li>
+      </ol>
+      <pre><code>Authorization: Bearer &lt;jwt-token&gt;</code></pre>
+    </section>
+
+    <section class="notes">
+      <h2>📌 Key Points to Remember</h2>
+      <ul>
+        <li><span class="badge badge-blue">Important</span> JWT is not encryption. The payload can be read, but it cannot be changed without breaking the signature.</li>
+        <li><span class="badge badge-blue">Claims</span> Common claims include <code>exp</code>, <code>iat</code>, and <code>sub</code>.</li>
+        <li><span class="badge badge-blue">Stateless</span> The server does not need to store session data for each user.</li>
+        <li><span class="badge badge-green">Security tip</span> Always verify the signature before trusting the token.</li>
+      </ul>
+    </section>
+
+    <section class="notes">
+      <h2>⚠️ Common Mistakes</h2>
+      <ul>
+        <li>Thinking Base64URL is the same as encryption.</li>
+        <li>Putting sensitive data directly inside the payload.</li>
+        <li>Accepting weak or unexpected algorithms.</li>
+        <li>Giving tokens too long a lifespan.</li>
+      </ul>
+    </section>
+
+    <section class="notes">
+      <h2>✅ Advantages</h2>
+      <ul>
+        <li>Fast because the server does not need to look up session data every time.</li>
+        <li>Portable across different services and APIs.</li>
+        <li>Scalable for modern distributed systems and microservices.</li>
+      </ul>
+    </section>
+
+    <section class="steps">
+      <h2>🌐 How Browsers Store JWTs</h2>
+      <p class="note">Browsers do not automatically understand JWTs. They only save tokens when the server or frontend code tells them to do so.</p>
+      <div class="card-grid">
+        <article class="card">
+          <h3>Cookies</h3>
+          <p>If the server sends a <code>Set-Cookie</code> header, the browser stores the token automatically as a cookie.</p>
+        </article>
+        <article class="card">
+          <h3>localStorage</h3>
+          <p>Frontend code can store the token explicitly with JavaScript.</p>
+        </article>
+        <article class="card">
+          <h3>sessionStorage</h3>
+          <p>Similar to localStorage, but it is cleared when the tab closes.</p>
+        </article>
+        <article class="card">
+          <h3>In-memory</h3>
+          <p>The token exists only in JavaScript memory and is lost on reload.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="steps">
+      <h2>📊 Storage Comparison</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Storage Method</th>
+            <th>Auto-saved by Browser?</th>
+            <th>XSS Risk</th>
+            <th>CSRF Risk</th>
+            <th>Persistence</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HttpOnly Cookie</td>
+            <td>Yes</td>
+            <td>Low</td>
+            <td>Medium</td>
+            <td>Survives reload</td>
+          </tr>
+          <tr>
+            <td>localStorage</td>
+            <td>No</td>
+            <td>High</td>
+            <td>Low</td>
+            <td>Survives reload</td>
+          </tr>
+          <tr>
+            <td>sessionStorage</td>
+            <td>No</td>
+            <td>High</td>
+            <td>Low</td>
+            <td>Tab-only</td>
+          </tr>
+          <tr>
+            <td>In-memory</td>
+            <td>No</td>
+            <td>Medium</td>
+            <td>Low</td>
+            <td>Lost on reload</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="notes">
+      <h2>⚠️ Risks and Best Practices</h2>
+      <ul>
+        <li><strong>XSS:</strong> Scripts can read tokens stored in localStorage or sessionStorage.</li>
+        <li><strong>CSRF:</strong> Cookies are automatically attached by the browser, which can be abused.</li>
+        <li><strong>Best practice:</strong> Keep access tokens in memory and refresh tokens in HttpOnly, Secure, SameSite cookies.</li>
+        <li><strong>Modern approach:</strong> Consider a Backend-for-Frontend (BFF) pattern for highly sensitive applications.</li>
+      </ul>
+    </section>
+
+    <section class="steps">
+      <h2>🔐 JWT Cookies vs localStorage</h2>
+      <p>JWTs stored in localStorage are easy to use but are more exposed to XSS attacks. HttpOnly cookies are safer against XSS, but they introduce CSRF concerns. A hybrid design is often the best approach.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Option</th>
+            <th>XSS Risk</th>
+            <th>CSRF Risk</th>
+            <th>Best Use Case</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>localStorage</td>
+            <td>High</td>
+            <td>Low</td>
+            <td>SPAs using manual Authorization headers</td>
+          </tr>
+          <tr>
+            <td>HttpOnly Cookies</td>
+            <td>Low</td>
+            <td>Medium</td>
+            <td>Safer refresh/session token storage</td>
+          </tr>
+          <tr>
+            <td>BFF Pattern</td>
+            <td>Lowest</td>
+            <td>Low</td>
+            <td>Highly sensitive apps</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="steps">
+      <h2>🔄 Refresh Tokens</h2>
+      <p>Refresh tokens are long-lived credentials used to obtain new short-lived access tokens without asking users to log in again.</p>
+      <div class="card-grid">
+        <article class="card">
+          <h3>Access token</h3>
+          <p>Short-lived and sent with most API requests.</p>
+        </article>
+        <article class="card">
+          <h3>Refresh token</h3>
+          <p>Longer-lived and used only to obtain a new access token.</p>
+        </article>
+      </div>
+      <ol>
+        <li>Login creates both tokens.</li>
+        <li>The client uses the access token until it expires.</li>
+        <li>When it expires, the client refreshes it using the refresh token.</li>
+        <li>The server can rotate and revoke refresh tokens for better security.</li>
+      </ol>
+    </section>
+
+    <section class="notes">
+      <h2>✅ Recommendations for a .NET Developer</h2>
+      <ul>
+        <li>Use HttpOnly, Secure, and SameSite cookies for refresh tokens.</li>
+        <li>Keep access tokens in memory and refresh them silently when needed.</li>
+        <li>Avoid storing sensitive JWTs in localStorage or sessionStorage.</li>
+        <li>Consider the BFF pattern if your application deals with finance, healthcare, or other sensitive data.</li>
+      </ul>
+    </section>
+
+    <div class="footer">
+      <p>References: <a href="https://adevguide.com/web-fundamentals/networking/how-jwt-works-step-by-step-guide-for-beginners/" target="_blank" rel="noopener noreferrer">ADevGuide</a>, <a href="https://www.geeksforgeeks.org/web-tech/understanding-jwt-authentication-in-apis/" target="_blank" rel="noopener noreferrer">GeeksForGeeks</a>, <a href="https://jsonic.io/guides/jwt-cookies-vs-localstorage" target="_blank" rel="noopener noreferrer">jsonic.io</a>.</p>
+    </div>
+  </main>
+</body>
+</html>  
