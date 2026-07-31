@@ -33,6 +33,21 @@
       padding: 32px 20px 60px;
     }
 
+    .top-nav {
+      margin-bottom: 16px;
+    }
+
+    .top-nav a {
+      display: inline-block;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .top-nav a:hover {
+      text-decoration: underline;
+    }
+
     header {
       background: linear-gradient(135deg, var(--accent), #1d4ed8);
       color: white;
@@ -169,6 +184,9 @@
 </head>
 <body>
   <main class="container">
+    <div class="top-nav">
+      <a href="index.html">← Back to Home</a>
+    </div>
     <header>
       <h1>Azure Key Vault Explained</h1>
       <p>Azure Key Vault is a secure cloud service for storing secrets, encryption keys, and certificates without hardcoding sensitive values in applications.</p>
