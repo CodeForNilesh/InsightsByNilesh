@@ -59,6 +59,35 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
 
+    .topics {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .topic-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .topic-list a {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .topic-list a:hover {
+      background: #bfdbfe;
+    }
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -175,7 +204,19 @@
       <p>It is compact, signed, and commonly used in modern APIs and authentication systems.</p>
     </section>
 
-    <section class="steps">
+    <section class="topics">
+      <h2>📚 Topics at a Glance</h2>
+      <div class="topic-list">
+        <a href="#jwt-basics">JWT Basics</a>
+        <a href="#jwt-flow">JWT Flow</a>
+        <a href="#key-points">Key Points</a>
+        <a href="#storage">Storage & Browser Behavior</a>
+        <a href="#cookies-vs-localstorage">Cookies vs localStorage</a>
+        <a href="#refresh-tokens">Refresh Tokens</a>
+      </div>
+    </section>
+
+    <section class="steps" id="jwt-basics">
       <h2>🔑 JWT Basics</h2>
       <div class="card-grid">
         <article class="card">
@@ -195,7 +236,7 @@
       <pre><code>xxxxx.yyyyy.zzzzz</code></pre>
     </section>
 
-    <section class="steps">
+    <section class="steps" id="jwt-flow">
       <h2>🛠 JWT Flow</h2>
       <ol>
         <li><strong>Login request:</strong> The user sends credentials to the server.</li>
@@ -207,7 +248,7 @@
       <pre><code>Authorization: Bearer &lt;jwt-token&gt;</code></pre>
     </section>
 
-    <section class="notes">
+    <section class="notes" id="key-points">
       <h2>📌 Key Points to Remember</h2>
       <ul>
         <li><span class="badge badge-blue">Important</span> JWT is not encryption. The payload can be read, but it cannot be changed without breaking the signature.</li>
@@ -236,7 +277,7 @@
       </ul>
     </section>
 
-    <section class="steps">
+    <section class="steps" id="storage">
       <h2>🌐 How Browsers Store JWTs</h2>
       <p class="note">Browsers do not automatically understand JWTs. They only save tokens when the server or frontend code tells them to do so.</p>
       <div class="card-grid">
@@ -314,7 +355,7 @@
       </ul>
     </section>
 
-    <section class="steps">
+    <section class="steps" id="cookies-vs-localstorage">
       <h2>🔐 JWT Cookies vs localStorage</h2>
       <p>JWTs stored in localStorage are easy to use but are more exposed to XSS attacks. HttpOnly cookies are safer against XSS, but they introduce CSRF concerns. A hybrid design is often the best approach.</p>
       <table>
@@ -349,7 +390,7 @@
       </table>
     </section>
 
-    <section class="steps">
+    <section class="steps" id="refresh-tokens">
       <h2>🔄 Refresh Tokens</h2>
       <p>Refresh tokens are long-lived credentials used to obtain new short-lived access tokens without asking users to log in again.</p>
       <div class="card-grid">
