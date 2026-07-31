@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TWAIN Scanning Standard Explained</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .top-nav {
+      margin-bottom: 16px;
+    }
+
+    .top-nav a {
+      display: inline-block;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .top-nav a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--accent), #1d4ed8);
+      color: white;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      line-height: 1.3;
+    }
+
+    h1 { font-size: 2rem; margin-bottom: 10px; }
+    h2 { font-size: 1.35rem; margin-bottom: 12px; color: #111827; }
+
+    .intro, .topics, .steps, .notes {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .topic-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .topic-list a {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .topic-list a:hover {
+      background: #bfdbfe;
+    }
+
+    ol, ul {
+      padding-left: 22px;
+      margin: 0;
+    }
+
+    li { margin-bottom: 8px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: var(--card);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--accent-soft);
+      color: #1e3a8a;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div class="top-nav">
+      <a href="index.html">← Back to Home</a>
+    </div>
+
+    <header>
+      <h1>TWAIN Scanning Standard</h1>
+      <p>TWAIN is a widely used standard that helps applications communicate with scanners in a consistent way.</p>
+    </header>
+
+    <section class="intro">
+      <p><strong>TWAIN</strong> is a communication protocol created in 1992 to give software a common way to talk to scanners. It helped replace the confusion of many vendor-specific drivers with one standard interface.</p>
+    </section>
+
+    <section class="topics">
+      <h2>📚 Topics at a Glance</h2>
+      <div class="topic-list">
+        <a href="#what-is-twain">What is TWAIN?</a>
+        <a href="#how-scanners-use-twain">How Scanners Use TWAIN</a>
+        <a href="#twain-direct">TWAIN Direct</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#limitations">Limitations</a>
+        <a href="#takeaway">Key Takeaway</a>
+      </div>
+    </section>
+
+    <section class="steps" id="what-is-twain">
+      <h2>🌍 What is TWAIN?</h2>
+      <p>TWAIN is a communication protocol and API created by the TWAIN Working Group to unify scanners and software. It provides a vendor-neutral interface and is supported by many scanner manufacturers worldwide. The latest major release is TWAIN 2.5.</p>
+    </section>
+
+    <section class="steps" id="how-scanners-use-twain">
+      <h2>🖥️ How Scanners Use TWAIN</h2>
+      <ol>
+        <li>Application requests a scan, such as from Word or Photoshop.</li>
+        <li>The TWAIN interface opens.</li>
+        <li>The user selects the scanner.</li>
+        <li>The TWAIN driver communicates with the device and returns the scanned image.</li>
+      </ol>
+      <p>This ensures a TWAIN-compliant scanner can work with a TWAIN-aware application, regardless of brand.</p>
+    </section>
+
+    <section class="steps" id="twain-direct">
+      <h2>🚀 Scanning Without Drivers: TWAIN Direct</h2>
+      <ul>
+        <li>Driver-free scanning: apps can talk directly to scanners over the network.</li>
+        <li>Cloud and browser support: it works well with web applications and mobile environments.</li>
+        <li>Simple setup: configure the scanner using its IP or URL and credentials.</li>
+        <li>Device discovery: applications can automatically find available scanners.</li>
+      </ul>
+      <p>This means users can scan documents without installing a traditional scanner driver.</p>
+    </section>
+
+    <section class="steps" id="comparison">
+      <h2>📊 Comparison: Traditional TWAIN vs TWAIN Direct</h2>
+      <table>
+        <tr>
+          <th>Traditional TWAIN</th>
+          <th>TWAIN Direct</th>
+        </tr>
+        <tr>
+          <td>Requires local driver installation</td>
+          <td>No driver needed</td>
+        </tr>
+        <tr>
+          <td>USB or local connection</td>
+          <td>Works over network or cloud</td>
+        </tr>
+        <tr>
+          <td>Application must support TWAIN</td>
+          <td>Works in browsers and mobile apps</td>
+        </tr>
+        <tr>
+          <td>Mature and widely adopted</td>
+          <td>Modern and cloud-ready</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="notes" id="limitations">
+      <h2>⚠️ Limitations & Considerations</h2>
+      <ul>
+        <li>Some scanners may still require vendor-specific features beyond TWAIN.</li>
+        <li>Alternatives such as WIA on Windows and SANE on Linux also exist.</li>
+        <li>TWAIN Direct requires proper authentication and network security when scanning over a network.</li>
+      </ul>
+    </section>
+
+    <section class="steps" id="takeaway">
+      <h2>✅ Key Takeaway</h2>
+      <p>TWAIN ensures broad scanner compatibility, while TWAIN Direct enables driver-free, cloud-friendly scanning. For developers and IT teams, this can mean easier integration, stronger cross-platform support, and reduced maintenance.</p>
+    </section>
+  </main>
+</body>
+</html>
