@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Key Vault Explained</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --accent-soft: #dbeafe;
+      --border: #e5e7eb;
+      --success: #047857;
+      --warning: #b45309;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--accent), #1d4ed8);
+      color: white;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+      margin-bottom: 24px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      line-height: 1.3;
+    }
+
+    h1 { font-size: 2rem; margin-bottom: 10px; }
+    h2 { font-size: 1.35rem; margin-bottom: 12px; color: #111827; }
+
+    .intro, .topics, .steps, .notes {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .topic-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .topic-list a {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .topic-list a:hover {
+      background: #bfdbfe;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 16px 0 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    ol, ul {
+      padding-left: 22px;
+      margin: 0;
+    }
+
+    li { margin-bottom: 8px; }
+
+    code, pre {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    pre {
+      background: #111827;
+      color: #f9fafb;
+      padding: 14px 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: var(--card);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--accent-soft);
+      color: #1e3a8a;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .badge-blue { background: var(--accent-soft); color: var(--accent); }
+    .badge-green { background: #dcfce7; color: var(--success); }
+    .badge-amber { background: #fef3c7; color: var(--warning); }
+
+    .note {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      color: var(--muted);
+      margin: 12px 0;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      header { padding: 24px; }
+      .container { padding: 20px 12px 40px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Azure Key Vault Explained</h1>
+      <p>Azure Key Vault is a secure cloud service for storing secrets, encryption keys, and certificates without hardcoding sensitive values in applications.</p>
+    </header>
+
+    <section class="intro">
+      <p><strong>Azure Key Vault</strong> helps organizations protect sensitive information in a centralized, governed, and auditable place.</p>
+      <p>It works closely with Azure Active Directory and supports access control through either Access Policies or Azure RBAC.</p>
+    </section>
+
+    <section class="topics">
+      <h2>📚 Topics at a Glance</h2>
+      <div class="topic-list">
+        <a href="#overview">Overview</a>
+        <a href="#flow">How It Works</a>
+        <a href="#config">What to Configure</a>
+        <a href="#comparison">Access Policies vs RBAC</a>
+        <a href="#managed-identity">Managed Identity</a>
+        <a href="#example">App Service Example</a>
+      </div>
+    </section>
+
+    <section class="steps" id="overview">
+      <h2>🔐 What is Azure Key Vault?</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3>Secrets</h3>
+          <p>Store passwords, connection strings, API keys, and other confidential values safely.</p>
+        </article>
+        <article class="card">
+          <h3>Keys</h3>
+          <p>Manage encryption keys used to protect data and applications.</p>
+        </article>
+        <article class="card">
+          <h3>Certificates</h3>
+          <p>Keep SSL/TLS certificates in one secure, managed location.</p>
+        </article>
+      </div>
+      <p><strong>In short:</strong> Azure Key Vault is a secure, managed vault for secrets, keys, and certificates with fine-grained access control.</p>
+    </section>
+
+    <section class="steps" id="flow">
+      <h2>🛠 How an Application Talks to Key Vault</h2>
+      <ol>
+        <li><strong>App identity is created:</strong> The app uses a Service Principal or Managed Identity.</li>
+        <li><strong>Authentication happens:</strong> The app authenticates with Azure Active Directory.</li>
+        <li><strong>Access token is issued:</strong> Azure AD returns a short-lived token for the app.</li>
+        <li><strong>Key Vault is called:</strong> The app sends a request using REST APIs or Azure SDKs.</li>
+        <li><strong>Permissions are validated:</strong> Key Vault checks RBAC roles or Access Policies.</li>
+        <li><strong>Access is granted or denied:</strong> The secret, key, or certificate is returned only if permission exists.</li>
+      </ol>
+    </section>
+
+    <section class="notes" id="config">
+      <h2>⚙️ What Needs to Be Configured</h2>
+      <p>To allow an application to read or manage secrets in Azure Key Vault, you must configure several things carefully. The goal is to give the app a secure identity and then grant only the permissions it truly needs.</p>
+
+      <ul>
+        <li><span class="badge badge-blue">1. Identity</span> Create or enable an identity for the application. The most recommended option is a Managed Identity when the app runs inside Azure. If the app is external, create a Service Principal in Azure AD.</li>
+        <li><span class="badge badge-blue">2. Key Vault Access Model</span> Decide how access will be granted. You can use Access Policies for a simpler, vault-specific approach, or Azure RBAC for a modern, centralized, and scalable method.</li>
+        <li><span class="badge badge-blue">3. Role or Permissions</span> Assign the correct permissions for the required actions. For secrets, common permissions include get, list, set, and delete. For keys and certificates, different permissions may be needed depending on the operation.</li>
+        <li><span class="badge badge-blue">4. Network Restrictions</span> If needed, configure firewall rules or private endpoints so that only trusted networks can reach the Key Vault.</li>
+        <li><span class="badge badge-green">5. Least Privilege</span> Always grant the minimum required permissions. This reduces security risk and improves governance.</li>
+        <li><span class="badge badge-amber">6. Verification</span> After configuration, test the app by trying to fetch a secret. If access fails, review the role assignments or policy settings and adjust them accordingly.</li>
+      </ul>
+
+      <p class="note">In simple terms, you must give the app an identity, assign it permission in Key Vault, and make sure the access is limited to what it needs.</p>
+    </section>
+
+    <section class="steps" id="comparison">
+      <h2>📊 Access Policies vs Azure RBAC</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Access Policies (Legacy)</th>
+            <th>Azure RBAC (Recommended)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Scope</td>
+            <td>Key Vault-specific</td>
+            <td>Works across Azure resources</td>
+          </tr>
+          <tr>
+            <td>Granularity</td>
+            <td>Limited permissions</td>
+            <td>Fine-grained role-based control</td>
+          </tr>
+          <tr>
+            <td>Management</td>
+            <td>Configured inside Key Vault</td>
+            <td>Managed through Azure IAM and role assignments</td>
+          </tr>
+          <tr>
+            <td>Best Fit</td>
+            <td>Simple, small setups</td>
+            <td>Enterprise and scalable environments</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="notes">
+      <h2>🧭 RBAC Role Assignment Steps</h2>
+      <ol>
+        <li>Enable identity for the application.</li>
+        <li>Open the Key Vault and go to Access control (IAM).</li>
+        <li>Choose Add role assignment.</li>
+        <li>Select a role such as Key Vault Secrets User or Key Vault Administrator.</li>
+        <li>Assign it to the application’s Managed Identity or Service Principal.</li>
+        <li>Verify access and adjust permissions as needed.</li>
+      </ol>
+    </section>
+
+    <section class="steps" id="managed-identity">
+      <h2>🪪 Managed Identities</h2>
+      <p class="note">Managed identities let applications authenticate to Azure services without storing credentials directly in code.</p>
+      <div class="card-grid">
+        <article class="card">
+          <h3>System-assigned</h3>
+          <p>Tied to one Azure resource and deleted with it.</p>
+        </article>
+        <article class="card">
+          <h3>User-assigned</h3>
+          <p>Created as a separate resource and can be shared across multiple services.</p>
+        </article>
+        <article class="card">
+          <h3>Benefit</h3>
+          <p>No secret handling in code and automatic credential management by Azure.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="steps" id="example">
+      <h2>🚀 App Service Example</h2>
+      <ol>
+        <li>Enable the App Service’s system-assigned managed identity.</li>
+        <li>Grant the identity a Key Vault role such as Key Vault Secrets User.</li>
+        <li>Use Azure SDKs in your application to fetch the secret.</li>
+      </ol>
+      <pre><code>using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+
+var client = new SecretClient(
+    new Uri("https://&lt;your-keyvault-name&gt;.vault.azure.net/"),
+    new DefaultAzureCredential());
+
+KeyVaultSecret secret = client.GetSecret("MySecretName");
+Console.WriteLine(secret.Value);</code></pre>
+      <p class="note">When the app runs in Azure, DefaultAzureCredential can automatically use the Managed Identity to authenticate to Key Vault.</p>
+    </section>
+  </main>
+</body>
+</html>
